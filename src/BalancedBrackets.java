@@ -87,7 +87,10 @@ public class BalancedBrackets {
                 angleBracketsCount++;
             } else if (c == '>') {
                 angleBracketsCount--;
+            } else {
+                return false;
             }
+
             if (bracketsCount < 0 || squareBracketsCount < 0 || curlyBracketsCount < 0 || angleBracketsCount < 0) {
                 return false;
             }
