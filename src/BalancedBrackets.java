@@ -21,9 +21,13 @@ public class BalancedBrackets {
         System.out.println(balancedBrackets("{[>"));  //false
         System.out.println(balancedBrackets("))"));  //false
 
+        System.out.println(balancedBracketsNoStack("()"));  //true
+        System.out.println(balancedBracketsNoStack("{[>"));  //false
+        System.out.println(balancedBracketsNoStack("))"));  //false
+
     }
 
-    public static boolean balancedBrackets(String s){
+    static boolean balancedBrackets(String s){
 
         //create a map with open and closed brackets
         // iterate over s,
@@ -50,10 +54,45 @@ public class BalancedBrackets {
             }
         }
         return (stack.isEmpty());
-
+        //T:O(n) -> iterates over s
+        //M:O(n) -> stack's len could be as long as len of s
     }
 
-    //T:O(n)
-    //M:O(n)
 
+    //not using stack: counter for each type of bracket
+    //T: O(n) -> iterates through len of string
+    //M: O(1) -> constant amount of memory to store the counters
+    static boolean balancedBracketsNoStack(String s){
+
+        int bracketsCount = 0;
+        int squareBracketsCount = 0;
+        int curlyBracketsCount = 0;
+        int angleBracketsCount = 0;
+
+        for (var i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                bracketsCount++;
+            } else if (c == ')') {
+                bracketsCount--;
+            } else if (c == '[') {
+                squareBracketsCount++;
+            } else if (c == ']') {
+                squareBracketsCount--;
+            } else if (c == '{') {
+                curlyBracketsCount++;
+            } else if (c == '}') {
+                curlyBracketsCount--;
+            } else if (c == '<') {
+                angleBracketsCount++;
+            } else if (c == '>') {
+                angleBracketsCount--;
+            }
+            if (bracketsCount < 0 || squareBracketsCount < 0 || curlyBracketsCount < 0 || angleBracketsCount < 0) {
+                return false;
+            }
+        }
+        return bracketsCount == 0 && squareBracketsCount == 0 && curlyBracketsCount == 0 && angleBracketsCount == 0;
+    }
 }
+
